@@ -25,8 +25,8 @@
 /* Size of memory */
 #define MEMSIZE		100		/* Total size of memory */
 
-/* Sentinal */
-#define SENTINAL	-99999		/* Sentinal to control input */
+/* Sentinel */
+#define SENTINEL	-99999		/* Sentinel to control input */
 
 /* Validation of User Input */
 #define UPLIMIT		9999		/* Upper limit of the input */
@@ -68,7 +68,7 @@ void main(void ) {
 			goto input;
 		}
 		
-		if (memory[instructionCounter] == SENTINAL) {
+		if (memory[instructionCounter] == SENTINEL) {
 			memory[instructionCounter] = 0;
 			instructionCounter = MEMSIZE;
 			break;
@@ -92,6 +92,13 @@ void main(void ) {
 			/* Input/Output Operations */
 			case READ :	printf("? ");
 					scanf("%d", &memory[operand]);
+
+					/* Fatal Error */
+					if (memory[operand] < LOWLIMIT || memory[operand] > UPLIMIT) {
+						printf("*** Out of memory ***\n");
+						printf("*** Simpletron execution abnormally terminated ***\n");
+						exit(EXIT_FAILURE);
+					}
 					break;
 			case WRITE :	printf("%d\n", memory[operand]);
 					break;
@@ -108,7 +115,7 @@ void main(void ) {
 					/* Fatal Error */
 					if (accumulator < LOWLIMIT || accumulator > UPLIMIT) {
 						printf("*** Out of accumulator limit ***\n");
-						printf("*** Simpletron execution abnormally terminated ***");
+						printf("*** Simpletron execution abnormally terminated ***\n");
 						exit(EXIT_FAILURE);
 					}
 					break;
@@ -117,7 +124,7 @@ void main(void ) {
 					/* Fatal Error */
 					if (accumulator < LOWLIMIT || accumulator > UPLIMIT) {
 						printf("*** Out of accumulator limit ***\n");
-						printf("*** Simpletron execution abnormally terminated ***");
+						printf("*** Simpletron execution abnormally terminated ***\n");
 						exit(EXIT_FAILURE);
 					}
 					break;
@@ -127,7 +134,7 @@ void main(void ) {
 					/* Fatal Error */
 					else {
 						printf("*** Attempt to divide by zero ***\n");
-						printf("*** Simpletron execution abnormally terminated ***");
+						printf("*** Simpletron execution abnormally terminated ***\n");
 						exit(EXIT_FAILURE);
 					}
 					break;
@@ -136,7 +143,7 @@ void main(void ) {
 					/* Fatal Error */
 					if (accumulator < LOWLIMIT || accumulator > UPLIMIT) {
 						printf("*** Out of accumulator limit ***\n");
-						printf("*** Simpletron execution abnormally terminated ***");
+						printf("*** Simpletron execution abnormally terminated ***\n");
 						exit(EXIT_FAILURE);
 					}
 					break;
@@ -202,7 +209,7 @@ void dump(const int memory[], int accumulator, int instructionCounter) {
 		printf("%.2d", i);
 		
 		for(j = i; j < i+10; j++)
-			printf(" %c%.4d", memory[j] < 0 ? '-' : '+', memory[j]);
+			printf(" %c%.4d", memory[j] < 0 ? '-' : '+', memory[j] < 0 ? -memory[j] : memory[j]);
       
 		printf("\n");
    	}
@@ -213,7 +220,7 @@ void dump(const int memory[], int accumulator, int instructionCounter) {
 /* int validate(int word) : to validate user input */
 int validate(int word) {
 
-	if (word == SENTINAL)
+	if (word == SENTINEL)
 		return VALID;
 	else
 		return INVALID(word);
