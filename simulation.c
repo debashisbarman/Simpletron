@@ -32,7 +32,7 @@
 #define UPLIMIT		9999		/* Upper limit of the input */
 #define LOWLIMIT	-9999		/* Lower limit of the input */
 #define VALID		1		/* Return 1, true */
-#define INVALID(WORD)	((WORD >= LOWLIMIT) && (WORD <= UPLIMIT));	/* Return 0, false */
+#define INVALID		((WORD >= LOWLIMIT) && (WORD <= UPLIMIT));	/* Return 0, false */
 
 /* Modules */
 void welcome(void );			/* To display welcome screen */
@@ -223,5 +223,5 @@ int validate(int word) {
 	if (word == SENTINEL)
 		return VALID;
 	else
-		return INVALID(word);
+		return INVALID;
 }
